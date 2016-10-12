@@ -106,7 +106,12 @@ Placetobe Campaign Page
         max-width: 100%;
       }
 
-      :host placetobe-navigation-bar {
+      :host #stickyNavigationBar {
+        position: fixed;
+        top:0;
+        left: 0;
+        right: 0;
+        z-index: 2;
       }
 
       :host footer {
@@ -125,6 +130,12 @@ Placetobe Campaign Page
       body-text="{{campaignText}}"
     ></caas-campaign>
 
+      <placetobe-navigation-bar id="stickyNavigationBar" hidden$="[[stickyNavBarHidden]]">
+        <li slot="navigation" class="selected"><a href="#">[[title]]</a></li>
+        <li slot="navigation">Downloads</li>
+        <li slot="navigation">Investeerderservaringen</li>
+        <placetobe-button slot="footer">investeer</placetobe-button>
+      </placetobe-navigation-bar>
 
       <header>
         <h1>[[title]]</h1>
@@ -145,7 +156,7 @@ Placetobe Campaign Page
       src="[[imageUrl]]"
     ></iron-image>
 
-    <placetobe-navigation-bar>
+    <placetobe-navigation-bar id="navigationBar">
       <li slot="navigation" class="selected"><a href="#">[[title]]</a></li>
       <li slot="navigation">Downloads</li>
       <li slot="navigation">Investeerderservaringen</li>
@@ -178,6 +189,16 @@ Placetobe Campaign Page
 
       is: 'placetobe-campaign-page',
 
+      ready: function() {
+        this._setScrollPositions();
+        window.addEventListener('scroll', this._setScrollPositions.bind(this))
+        window.addEventListener('resize', this._setScrollPositions.bind(this))
+      },
+
+      attached: function() {
+        this._setScrollPositions();
+      },
+
       properties: {
         
         apiEndpoint: {
@@ -194,12 +215,36 @@ Placetobe Campaign Page
           type: String,
           value: null,
           observer: '_parseCampaignText'
+        },
+
+        stickyNavBarHidden: {
+          type: Boolean,
+          computed: '_computeStickyNavBarHidden(_scrollY, _navigationBarY)'
+        },
+
+        _scrollY: {
+          type: Number,
+          value: 0
+        },
+
+        _navigationBarY: {
+          type: Number,
+          value: 0          
         }
 
       },
 
+      _setScrollPositions: function(evt) {
+        this._scrollY = window.document.body.scrollTop;
+        this._navigationBarY = this.$.navigationBar.offsetTop;
+      },
+
       _parseCampaignText: function(campaignText) {
         this.$.campaignText.innerHTML = campaignText;
+      },
+
+      _computeStickyNavBarHidden: function(scrollY, navigationBarY) {
+        return (scrollY <= navigationBarY);
       }
 
     });
