@@ -22,8 +22,7 @@ Placetobe Campaign Page
       }
 
       :host header,
-      :host main,
-      :host footer {
+      :host main {
         max-width: var(--placetobe-two-column-width);
         margin-left: auto;
         margin-right: auto;     
@@ -61,7 +60,7 @@ Placetobe Campaign Page
         }
       }
 
-      #primary-stats-card {
+      placetobe-campaign-stats-card {
         max-width: var(--placetobe-layout-width);
         position: relative;
         z-index: 1;
@@ -117,7 +116,7 @@ Placetobe Campaign Page
       }
 
       :host footer {
-        margin-bottom: -100px;
+        margin: 0 auto -100px auto;
         position: relative;
         z-index: 1;
       }
@@ -145,7 +144,6 @@ Placetobe Campaign Page
       </header>
 
     <placetobe-campaign-stats-card
-      id="primary-stats-card"
       api-endpoint="[[apiEndpoint]]"
       campaign-id="[[campaignId]]"
     ></placetobe-campaign-stats-card>
