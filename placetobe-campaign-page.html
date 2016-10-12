@@ -1,0 +1,207 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../caas-campaign/caas-campaign.html">
+<link rel="import" href="../placetobe-styles/placetobe-styles.html">
+<link rel="import" href="../placetobe-button/placetobe-button.html">
+<link rel="import" href="../placetobe-campaign-stats-card/placetobe-campaign-stats-card.html">
+<link rel="import" href="../placetobe-navigation-bar/placetobe-navigation-bar.html">
+<link rel="import" href="../iron-image/iron-image.html">
+
+<!--
+`placetobe-campaign-page`
+Placetobe Campaign Page
+
+@demo demo/index.html 
+-->
+
+<dom-module id="placetobe-campaign-page">
+  <template>
+    <style>
+      :host {
+        display: block;
+        color: var(--placetobe-color-darkblue);
+      }
+
+      :host header,
+      :host main,
+      :host footer {
+        max-width: var(--placetobe-two-column-width);
+        margin-left: auto;
+        margin-right: auto;     
+        padding: 0 18px;   
+      }
+
+      :host header {
+        margin-top: 54px;
+        margin-bottom: 54px;
+        position: relative;
+        z-index: 1;
+      }
+
+      :host header h1 {
+        @apply(--placetobe-font-title-small);
+        text-align: center;
+        margin-bottom: 18px;
+      }
+
+      @media screen and (min-width: 600px) {
+        :host header h1 {
+          @apply(--placetobe-font-title-large);
+          margin-bottom: 18px;
+        }
+      }
+
+      :host header h2 {
+        @apply(--placetobe-font-heading1-regular-small);
+        text-align: center;
+      }
+
+      @media screen and (min-width: 600px) {
+        :host header h2 {
+          @apply(--placetobe-font-heading1-regular-large);
+        }
+      }
+
+      #primary-stats-card {
+        max-width: var(--placetobe-layout-width);
+        position: relative;
+        z-index: 1;
+        margin: 0 auto -118px auto;
+        padding: 18px;
+      }
+
+      :host #coverImage {
+        width: 100%;
+        height: 70vh;
+        position: relative;
+        z-index: 0;
+      }
+
+      :host main {
+      }
+
+      :host main article {
+        @apply(--placetobe-font-body-small);
+        margin: 36px 0;
+      }
+
+      :host main article strong,
+      :host main article bold {
+        @apply(--placetobe-font-body-bold-small);
+      }
+
+      :host main article ::slotted(h3),
+      :host main article ::slotted(div h3) {
+        @apply(--placetobe-font-heading4-small);        
+      }
+
+      @media screen and (min-width: 600px) {
+        :host main article ::slotted(h3),
+        :host main article ::slotted(div h3) {
+          @apply(--placetobe-font-heading4-large);        
+        }
+      }
+
+      :host main article ::slotted(img),
+      :host main article ::slotted(div img) {
+        max-width: 100%;
+      }
+
+      :host placetobe-navigation-bar {
+      }
+
+      :host footer {
+        margin-bottom: -100px;
+        position: relative;
+        z-index: 1;
+      }
+    </style>
+
+    <caas-campaign
+      api-endpoint="[[apiEndpoint]]"
+      id="[[campaignId]]"
+      title="{{title}}"
+      introduction-text="{{introductionText}}"
+      image-url="{{imageUrl}}"
+      body-text="{{campaignText}}"
+    ></caas-campaign>
+
+
+      <header>
+        <h1>[[title]]</h1>
+        <h2>[[introductionText]]</h2>
+      </header>
+
+    <placetobe-campaign-stats-card
+      id="primary-stats-card"
+      api-endpoint="[[apiEndpoint]]"
+      campaign-id="[[campaignId]]"
+    ></placetobe-campaign-stats-card>
+
+    <iron-image
+      id="coverImage"
+      preload
+      fade
+      sizing="cover"
+      src="[[imageUrl]]"
+    ></iron-image>
+
+    <placetobe-navigation-bar>
+      <li slot="navigation" class="selected"><a href="#">[[title]]</a></li>
+      <li slot="navigation">Downloads</li>
+      <li slot="navigation">Investeerderservaringen</li>
+      <placetobe-button slot="footer">investeer</placetobe-button>
+    </placetobe-navigation-bar>
+
+    <main>
+      <article id="campaignText"></article>
+    </main>
+
+    <footer>
+      <placetobe-campaign-stats-card
+        api-endpoint="[[apiEndpoint]]"
+        campaign-id="[[campaignId]]"
+      ></placetobe-campaign-stats-card>
+    </footer>
+
+    <iron-image
+      id="coverImage"
+      preload
+      fade
+      sizing="cover"
+      src="[[imageUrl]]"
+    ></iron-image>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'placetobe-campaign-page',
+
+      properties: {
+        
+        apiEndpoint: {
+          type: String,
+          value: null,
+        },
+
+        campaignId: {
+          type: String,
+          value: null,          
+        },
+
+        campaignText: {
+          type: String,
+          value: null,
+          observer: '_parseCampaignText'
+        }
+
+      },
+
+      _parseCampaignText: function(campaignText) {
+        this.$.campaignText.innerHTML = campaignText;
+      }
+
+    });
+  </script>
+</dom-module>
