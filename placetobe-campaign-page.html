@@ -84,26 +84,28 @@ Placetobe Campaign Page
         margin: 36px 0;
       }
 
-      :host main article strong,
-      :host main article bold {
+      :host main article ::slotted(* strong),
+      :host main article ::slotted(* bold) {
         @apply(--placetobe-font-body-bold-small);
       }
 
-      :host main article ::slotted(h3),
-      :host main article ::slotted(div h3) {
+      :host main article ::slotted(* h3) {
         @apply(--placetobe-font-heading4-small);        
       }
 
       @media screen and (min-width: 600px) {
-        :host main article ::slotted(h3),
-        :host main article ::slotted(div h3) {
+        :host main article ::slotted(* h3) {
           @apply(--placetobe-font-heading4-large);        
         }
       }
 
-      :host main article ::slotted(img),
-      :host main article ::slotted(div img) {
-        max-width: 100%;
+      :host main article ::slotted(* iframe) {
+        width: 100%;        
+      }
+
+      :host main article ::slotted(* img) {
+        width: 100%;
+        height: auto;
       }
 
       :host #stickyNavigationBar {
