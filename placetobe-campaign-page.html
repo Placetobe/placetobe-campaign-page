@@ -82,6 +82,16 @@ Placetobe Campaign Page
       :host main {
       }
 
+      a.button {
+        @apply(--placetobe-default-button-small);
+      }
+
+      @media screen and (min-width: 600px) {
+        a.button {
+          @apply(--placetobe-default-button-large);
+        }
+      }
+
       :host #downloads {
         margin:0;
         padding: 0;
@@ -106,13 +116,11 @@ Placetobe Campaign Page
       #downloads li a {
         margin-top: 18px;
         display: block;
-        @apply(--placetobe-default-button-small);
         background-color: var(--placetobe-color-green);
       }
 
       @media screen and (min-width: 600px) {
         #downloads li a {
-          @apply(--placetobe-default-button-large);
           background-color: var(--placetobe-color-green);
         }        
       }
@@ -150,12 +158,12 @@ Placetobe Campaign Page
         color: var(--placetobe-color-darkblue);
       }
 
-      :host #stickyNavigationBar {
+      :host placetobe-navigation-bar[data-sticky] {
         position: fixed;
         top:0;
         left: 0;
         right: 0;
-        z-index: 2;
+        z-index: 10;
       }
 
       :host footer {
@@ -163,7 +171,33 @@ Placetobe Campaign Page
         position: relative;
         z-index: 1;
       }
+
+      #invest-page {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 9;
+        border: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: white;
+      }
+
     </style>
+
+    <iframe
+      hidden$="[[!showInvestPage]]"
+      id="invest-page"
+      src="http://can.local/widget/#/youmee/investeer"
+    ></iframe>
+
+    <placetobe-navigation-bar hidden$="[[!showInvestPage]]" data-sticky>
+      <li slot="navigation" data-selected$="[[showStory]]"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
+      <li slot="navigation" data-selected$="[[showDownloads]]"><a href$="/campagnes/[[campaignId]]/downloads">Downloads</a></li>
+      <a slot="footer" class="button" href$="/campagnes/[[campaignId]]/investeer">investeer</a>
+    </placetobe-navigation-bar>
 
     <app-location
       route="{{campaignRoute}}"
@@ -198,10 +232,10 @@ Placetobe Campaign Page
       files="{{downloads}}"
     ></caas-campaign-files>
 
-      <placetobe-navigation-bar id="stickyNavigationBar" hidden$="[[stickyNavBarHidden]]">
+      <placetobe-navigation-bar id="stickyNavigationBar" hidden$="[[stickyNavBarHidden]]" data-sticky>
         <li slot="navigation" data-selected$="[[showStory]]"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
         <li slot="navigation" data-selected$="[[showDownloads]]"><a href$="/campagnes/[[campaignId]]/downloads">Downloads</a></li>
-        <placetobe-button slot="footer">investeer</placetobe-button>
+        <a slot="footer" class="button" href$="/campagnes/[[campaignId]]/investeer">investeer</a>
       </placetobe-navigation-bar>
 
       <header>
@@ -227,7 +261,7 @@ Placetobe Campaign Page
     <placetobe-navigation-bar id="navigationBar">
         <li slot="navigation" data-selected$="[[showStory]]"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
         <li slot="navigation" data-selected$="[[showDownloads]]"><a href$="/campagnes/[[campaignId]]/downloads">Downloads</a></li>
-      <placetobe-button slot="footer">investeer</placetobe-button>
+        <a slot="footer" class="button" href$="/campagnes/[[campaignId]]/investeer">investeer</a>
     </placetobe-navigation-bar>
 
     <main>
@@ -240,7 +274,7 @@ Placetobe Campaign Page
           <li>
             <h5>[[item.name]]</h5>
             <article hidden$="[[!item.description]]">[[item.description]]</article>
-            <a href$="[[item.url]]" download>download bestand</a>
+            <a class="button" href$="[[item.url]]" download>download bestand</a>
           </li>
           </template>
         </ul>
@@ -330,6 +364,11 @@ Placetobe Campaign Page
         showStory: {
           type: Boolean,
           computed: '_computeShowStory(pageParams.section)'
+        },
+
+        showInvestPage: {
+          type: Boolean,
+          computed: '_computeShowInvestPage(pageParams.section)'
         }
 
       },
@@ -353,6 +392,10 @@ Placetobe Campaign Page
 
       _computeShowDownloads: function(pageSection) {
         return (pageSection === 'downloads');
+      },
+
+      _computeShowInvestPage: function(pageSection) {
+        return (pageSection === 'investeer');
       }
 
     });
