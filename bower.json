@@ -5,11 +5,13 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.6.0",
     "caas-campaign": "CaasElements/caas-campaign",
+    "caas-campaign-files": "CaasElements/caas-campaign-files",
     "placetobe-styles": "Placetobe/placetobe-styles",
     "placetobe-button": "Placetobe/placetobe-button",
     "placetobe-campaign-stats-card": "Placetobe/placetobe-campaign-stats-card",
     "placetobe-navigation-bar": "Placetobe/placetobe-navigation-bar",
-    "iron-image": "PolymerElements/iron-image#^1.2.5"
+    "iron-image": "PolymerElements/iron-image#^1.2.5",
+    "app-route": "PolymerElements/app-route#^0.9.2"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
@@ -17,6 +19,6 @@
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/Placetobe/placetobe-campaign-page"
 }

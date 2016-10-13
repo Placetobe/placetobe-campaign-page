@@ -1,10 +1,14 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../caas-campaign/caas-campaign.html">
+<link rel="import" href="../caas-campaign-files/caas-campaign-files.html">
 <link rel="import" href="../placetobe-styles/placetobe-styles.html">
 <link rel="import" href="../placetobe-button/placetobe-button.html">
 <link rel="import" href="../placetobe-campaign-stats-card/placetobe-campaign-stats-card.html">
 <link rel="import" href="../placetobe-navigation-bar/placetobe-navigation-bar.html">
+<link rel="import" href="../placetobe-button/placetobe-button.html">
 <link rel="import" href="../iron-image/iron-image.html">
+<link rel="import" href="../app-route/app-location.html">
+<link rel="import" href="../app-route/app-route.html">
 
 <!--
 `placetobe-campaign-page`
@@ -78,6 +82,41 @@ Placetobe Campaign Page
       :host main {
       }
 
+      :host #downloads {
+        margin:0;
+        padding: 0;
+        list-style: none;
+      }
+
+      #downloads li {
+        margin: 54px 0;
+        padding: 0;
+      }
+
+      #downloads li h5 {
+        @apply(--placetobe-font-heading1-small);
+        margin: 0 0 18px 0;
+      }
+
+      #downloads li article {
+        @apply(--placetobe-font-body-serif-small);
+        margin: 18px 0;
+      }
+
+      #downloads li a {
+        margin-top: 18px;
+        display: block;
+        @apply(--placetobe-default-button-small);
+        background-color: var(--placetobe-color-green);
+      }
+
+      @media screen and (min-width: 600px) {
+        #downloads li a {
+          @apply(--placetobe-default-button-large);
+          background-color: var(--placetobe-color-green);
+        }        
+      }
+
       :host main article {
         @apply(--placetobe-font-body-small);
         margin: 36px 0;
@@ -107,6 +146,10 @@ Placetobe Campaign Page
         height: auto;
       }
 
+      :host main article ::slotted(* a) {
+        color: var(--placetobe-color-darkblue);
+      }
+
       :host #stickyNavigationBar {
         position: fixed;
         top:0;
@@ -122,6 +165,24 @@ Placetobe Campaign Page
       }
     </style>
 
+    <app-location
+      route="{{campaignRoute}}"
+      path="{{campaignPath}}"
+      url-space-regex="^/campagnes/(.*?)"
+    ></app-location>
+
+    <app-route
+      route="{{campaignRoute}}"
+      pattern="/campagnes/:slug"
+      tail="{{campaignPageSection}}"
+    ></app-route>
+
+    <app-route
+      route="{{campaignPageSection}}"
+      pattern="/:section"
+      data="{{pageParams}}"
+    ></app-route>
+
     <caas-campaign
       api-endpoint="[[apiEndpoint]]"
       id="[[campaignId]]"
@@ -131,9 +192,15 @@ Placetobe Campaign Page
       body-text="{{campaignText}}"
     ></caas-campaign>
 
+    <caas-campaign-files
+      api-endpoint="[[apiEndpoint]]"
+      campaign-id="[[campaignId]]"
+      files="{{downloads}}"
+    ></caas-campaign-files>
+
       <placetobe-navigation-bar id="stickyNavigationBar" hidden$="[[stickyNavBarHidden]]">
-        <li slot="navigation" class="selected"><a href="#">[[title]]</a></li>
-        <li slot="navigation">Downloads</li>
+        <li slot="navigation" data-selected$="[[showStory]]"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
+        <li slot="navigation" data-selected$="[[showDownloads]]"><a href$="/campagnes/[[campaignId]]/downloads">Downloads</a></li>
         <placetobe-button slot="footer">investeer</placetobe-button>
       </placetobe-navigation-bar>
 
@@ -142,28 +209,46 @@ Placetobe Campaign Page
         <h2>[[introductionText]]</h2>
       </header>
 
-    <placetobe-campaign-stats-card
-      api-endpoint="[[apiEndpoint]]"
-      campaign-id="[[campaignId]]"
-    ></placetobe-campaign-stats-card>
+    <template is="dom-if" if="[[showStory]]">
+      <placetobe-campaign-stats-card
+        api-endpoint="[[apiEndpoint]]"
+        campaign-id="[[campaignId]]"
+      ></placetobe-campaign-stats-card>
 
-    <iron-image
-      id="coverImage"
-      preload
-      fade
-      sizing="cover"
-      src="[[imageUrl]]"
-    ></iron-image>
+      <iron-image
+        id="coverImage"
+        preload
+        fade
+        sizing="cover"
+        src="[[imageUrl]]"
+      ></iron-image>
+    </template>
 
     <placetobe-navigation-bar id="navigationBar">
-      <li slot="navigation" class="selected"><a href="#">[[title]]</a></li>
-      <li slot="navigation">Downloads</li>
+        <li slot="navigation" data-selected$="[[showStory]]"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
+        <li slot="navigation" data-selected$="[[showDownloads]]"><a href$="/campagnes/[[campaignId]]/downloads">Downloads</a></li>
       <placetobe-button slot="footer">investeer</placetobe-button>
     </placetobe-navigation-bar>
 
     <main>
-      <article id="campaignText"></article>
+
+      <article id="campaignText" hidden$="[[!showStory]]"></article>
+
+      <template is="dom-if" if="[[showDownloads]]">
+        <ul id="downloads">
+          <template is="dom-repeat" items="[[downloads]]">
+          <li>
+            <h5>[[item.name]]</h5>
+            <article hidden$="[[!item.description]]">[[item.description]]</article>
+            <a href$="[[item.url]]" download>download bestand</a>
+          </li>
+          </template>
+        </ul>
+      </template>
+
     </main>
+
+    <template is="dom=if" if="[[showStory]]">
 
     <footer>
       <placetobe-campaign-stats-card
@@ -179,6 +264,8 @@ Placetobe Campaign Page
       sizing="cover"
       src="[[imageUrl]]"
     ></iron-image>
+
+    </template>
 
   </template>
 
@@ -228,6 +315,21 @@ Placetobe Campaign Page
         _navigationBarY: {
           type: Number,
           value: 0          
+        },
+
+        pageParams: {
+          type: Object,
+          value: null
+        },
+
+        showDownloads: {
+          type: Boolean,
+          computed: '_computeShowDownloads(pageParams.section)'
+        },
+
+        showStory: {
+          type: Boolean,
+          computed: '_computeShowStory(pageParams.section)'
         }
 
       },
@@ -243,6 +345,14 @@ Placetobe Campaign Page
 
       _computeStickyNavBarHidden: function(scrollY, navigationBarY) {
         return (scrollY <= navigationBarY);
+      },
+
+      _computeShowStory: function(pageSection) {
+        return (!pageSection || pageSection == 'verhaal');
+      },
+
+      _computeShowDownloads: function(pageSection) {
+        return (pageSection === 'downloads');
       }
 
     });
