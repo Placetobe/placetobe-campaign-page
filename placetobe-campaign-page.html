@@ -30,12 +30,12 @@ Placetobe Campaign Page
         max-width: var(--placetobe-two-column-width);
         margin-left: auto;
         margin-right: auto;     
-        padding: 0 18px;   
+        padding: 0 var(--placetobe-margin);   
       }
 
       :host header {
-        margin-top: 54px;
-        margin-bottom: 54px;
+        margin-top: calc( var(--placetobe-margin) * 3 );
+        margin-bottom: calc( var(--placetobe-margin) * 3 );
         position: relative;
         z-index: 1;
       }
@@ -43,7 +43,7 @@ Placetobe Campaign Page
       :host header h1 {
         @apply(--placetobe-font-title);
         text-align: center;
-        margin-bottom: 18px;
+        margin-bottom: var(--placetobe-margin);
       }
 
       :host header h2 {
@@ -56,7 +56,7 @@ Placetobe Campaign Page
         position: relative;
         z-index: 1;
         margin: 0 auto -118px auto;
-        padding: 18px;
+        padding: var(--placetobe-margin);
       }
 
       :host iron-image {
@@ -85,29 +85,29 @@ Placetobe Campaign Page
       }
 
       #downloads li {
-        margin: 54px 0;
+        margin: calc( var(--placetobe-margin) * 3 ) 0;
         padding: 0;
       }
 
       #downloads li h5 {
         @apply(--placetobe-font-heading1);
-        margin: 0 0 18px 0;
+        margin: 0 0 var(--placetobe-margin) 0;
       }
 
       #downloads li article {
         @apply(--placetobe-font-body-serif);
-        margin: 18px 0;
+        margin: var(--placetobe-margin) 0;
       }
 
       #downloads li a {
-        margin-top: 18px;
+        margin-top: var(--placetobe-margin);
         display: inline-block;
         background-color: var(--placetobe-color-green);
       }
 
       :host main article {
         @apply(--placetobe-font-body);
-        margin: 36px 0;
+        margin: calc( var(--placetobe-margin) * 2 ) 0;
       }
 
       :host main article ::slotted(* strong),
@@ -162,7 +162,7 @@ Placetobe Campaign Page
       }
 
       google-youtube {
-        margin-top: 36px;
+        margin-top: calc( var(--placetobe-margin) * 2 );
       }
 
     </style>
