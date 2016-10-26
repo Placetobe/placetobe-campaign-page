@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-image/iron-image.html">
+<link rel="import" href="../google-youtube/google-youtube.html">
 <link rel="import" href="../app-route/app-location.html">
 <link rel="import" href="../app-route/app-route.html">
 <link rel="import" href="../caas-campaign/caas-campaign.html">
@@ -46,14 +47,8 @@ Placetobe Campaign Page
       }
 
       :host header h2 {
-        @apply(--placetobe-font-heading1-regular-small);
+        @apply(--placetobe-font-heading1-regular);
         text-align: center;
-      }
-
-      @media screen and (min-width: 600px) {
-        :host header h2 {
-          @apply(--placetobe-font-heading1-regular-large);
-        }
       }
 
       placetobe-campaign-stats-card {
@@ -66,6 +61,7 @@ Placetobe Campaign Page
 
       :host iron-image {
         margin-bottom: -4px;
+        background-color: var(--placetobe-color-taupe);
       }
 
       :host #coverImage {
@@ -79,13 +75,7 @@ Placetobe Campaign Page
       }
 
       a.button {
-        @apply(--placetobe-default-button-small);
-      }
-
-      @media screen and (min-width: 600px) {
-        a.button {
-          @apply(--placetobe-default-button-large);
-        }
+        @apply(--placetobe-default-button);
       }
 
       :host #downloads {
@@ -100,12 +90,12 @@ Placetobe Campaign Page
       }
 
       #downloads li h5 {
-        @apply(--placetobe-font-heading1-small);
+        @apply(--placetobe-font-heading1);
         margin: 0 0 18px 0;
       }
 
       #downloads li article {
-        @apply(--placetobe-font-body-serif-small);
+        @apply(--placetobe-font-body-serif);
         margin: 18px 0;
       }
 
@@ -115,30 +105,20 @@ Placetobe Campaign Page
         background-color: var(--placetobe-color-green);
       }
 
-      @media screen and (min-width: 600px) {
-        #downloads li a {
-          background-color: var(--placetobe-color-green);
-        }        
-      }
-
       :host main article {
-        @apply(--placetobe-font-body-small);
+        @apply(--placetobe-font-body);
         margin: 36px 0;
       }
 
       :host main article ::slotted(* strong),
       :host main article ::slotted(* bold) {
-        @apply(--placetobe-font-body-bold-small);
+        @apply(--placetobe-font-body-bold);
       }
 
+      :host main article ::slotted(div h3),
+      :host main article h3,
       :host main article ::slotted(* h3) {
-        @apply(--placetobe-font-heading4-small);        
-      }
-
-      @media screen and (min-width: 600px) {
-        :host main article ::slotted(* h3) {
-          @apply(--placetobe-font-heading4-large);        
-        }
+        @apply(--placetobe-font-heading4);        
       }
 
       :host main article ::slotted(* iframe) {
@@ -170,7 +150,7 @@ Placetobe Campaign Page
 
       #invest-page {
         position: fixed;
-        top: 0;
+        top: 80px;
         bottom: 0;
         left: 0;
         right: 0;
@@ -181,13 +161,18 @@ Placetobe Campaign Page
         background-color: white;
       }
 
+      google-youtube {
+        margin-top: 36px;
+      }
+
     </style>
 
+    <template is="dom-if" if="[[showInvestPage]]">
     <iframe
-      hidden$="[[!showInvestPage]]"
       id="invest-page"
       src$="http://can.local/widget/#/[[campaignId]]/investeer"
     ></iframe>
+    </template>
 
     <placetobe-navigation-bar hidden$="[[!showInvestPage]]" data-sticky>
       <li slot="navigation" data-selected$="[[showStory]]"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
@@ -262,6 +247,16 @@ Placetobe Campaign Page
 
     <main>
 
+      <google-youtube
+        hidden$="[[!showStory]]"
+        video-id="ETfiUYij5UE"
+        height="400px"
+        width="100%"
+        rel="0"
+        start="5"
+        autoplay="0">
+      </google-youtube>
+
       <article id="campaignText" hidden$="[[!showStory]]"></article>
 
       <template is="dom-if" if="[[showDownloads]]">
@@ -303,6 +298,7 @@ Placetobe Campaign Page
     Polymer({
 
       is: 'placetobe-campaign-page',
+      behaviors: [PlacetobeStylesBehavior],
 
       behaviors: [PlacetobeStylesBehavior],
 
