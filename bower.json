@@ -6,6 +6,7 @@
     "polymer": "Polymer/polymer#^1.6.0",
     "caas-campaign": "CaasElements/caas-campaign",
     "caas-campaign-files": "CaasElements/caas-campaign-files",
+    "placetobe-behaviors": "Placetobe/placetobe-behaviors",
     "placetobe-styles": "Placetobe/placetobe-styles",
     "placetobe-button": "Placetobe/placetobe-button",
     "placetobe-campaign-stats-card": "Placetobe/placetobe-campaign-stats-card",

@@ -4,6 +4,7 @@
 <link rel="import" href="../app-route/app-route.html">
 <link rel="import" href="../caas-campaign/caas-campaign.html">
 <link rel="import" href="../caas-campaign-files/caas-campaign-files.html">
+<link rel="import" href="../placetobe-behaviors/placetobe-styles-behavior.html">
 <link rel="import" href="../placetobe-styles/placetobe-styles.html">
 <link rel="import" href="../placetobe-campaign-stats-card/placetobe-campaign-stats-card.html">
 <link rel="import" href="../placetobe-navigation-bar/placetobe-navigation-bar.html">
@@ -39,16 +40,9 @@ Placetobe Campaign Page
       }
 
       :host header h1 {
-        @apply(--placetobe-font-title-small);
+        @apply(--placetobe-font-title);
         text-align: center;
         margin-bottom: 18px;
-      }
-
-      @media screen and (min-width: 600px) {
-        :host header h1 {
-          @apply(--placetobe-font-title-large);
-          margin-bottom: 18px;
-        }
       }
 
       :host header h2 {
@@ -309,6 +303,8 @@ Placetobe Campaign Page
     Polymer({
 
       is: 'placetobe-campaign-page',
+
+      behaviors: [PlacetobeStylesBehavior],
 
       ready: function() {
         this._setScrollPositions();
