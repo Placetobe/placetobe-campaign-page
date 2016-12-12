@@ -5,10 +5,14 @@
 <link rel="import" href="../app-route/app-route.html">
 <link rel="import" href="../caas-campaign/caas-campaign.html">
 <link rel="import" href="../caas-campaign-files/caas-campaign-files.html">
+<link rel="import" href="../caas-campaign-incentives/caas-campaign-incentives.html">
 <link rel="import" href="../placetobe-behaviors/placetobe-styles-behavior.html">
 <link rel="import" href="../placetobe-styles/placetobe-styles.html">
 <link rel="import" href="../placetobe-campaign-stats-card/placetobe-campaign-stats-card.html">
 <link rel="import" href="../placetobe-navigation-bar/placetobe-navigation-bar.html">
+<link rel="import" href="../placetobe-harmonica/placetobe-harmonica.html">
+<link rel="import" href="../placetobe-button/placetobe-button.html">
+<link rel="import" href="../placetobe-card/placetobe-card.html">
 
 <!--
 `placetobe-campaign-page`
@@ -25,8 +29,7 @@ Placetobe Campaign Page
         color: var(--placetobe-color-darkblue);
       }
 
-      :host header,
-      :host main {
+      :host header {
         max-width: var(--placetobe-two-column-width);
         margin-left: auto;
         margin-right: auto;     
@@ -72,6 +75,38 @@ Placetobe Campaign Page
       }
 
       :host main {
+        @apply(--placetobe-border-box);
+        @apply(--placetobe-flex-layout--vertical);
+        @apply(--placetobe-flex-align--space-between);
+        @apply(--placetobe-cross-align--start);
+        @apply(--placetobe-flex-wrap--nowrap);
+        max-width: calc( var(--placetobe-layout-width) + (var(--placetobe-margin) * 2) );
+        padding: 0 var(--placetobe-margin);
+        margin: calc( var(--placetobe-margin) * 3 ) auto;
+        position: relative;
+      }
+
+
+      @media(min-width: 601px) {
+        :host main {
+          @apply(--placetobe-flex-layout--horizontal); 
+        }
+      }
+
+      :host main > * {
+        @apply --placetobe-border-box;
+        min-width: var(--placetobe-column-width);
+        max-width: 100%;
+      }
+
+      :host main > *:nth-child(1) {
+        @apply(--placetobe-flex-item--2);
+        margin-bottom: var(--placetobe-margin);
+        padding-right: var(--placetobe-margin);
+      }
+
+      :host main > *:nth-child(2) {
+        @apply(--placetobe-flex-item--1);
       }
 
       a.button {
@@ -110,9 +145,9 @@ Placetobe Campaign Page
         margin: calc( var(--placetobe-margin) * 2 ) 0;
       }
 
-      :host main article ::slotted(* strong),
-      :host main article ::slotted(* bold) {
-        @apply(--placetobe-font-body-bold);
+      :host main article * strong,
+      :host main article * b {
+        @apply --placetobe-font-body-bold;
       }
 
       :host main article ::slotted(div h3),
@@ -125,7 +160,8 @@ Placetobe Campaign Page
         width: 100%;        
       }
 
-      :host main article ::slotted(* img) {
+      :host main article ::slotted(* img),
+      :host main article * img {
         width: 100%;
         height: auto;
       }
@@ -140,6 +176,10 @@ Placetobe Campaign Page
         left: 0;
         right: 0;
         z-index: 10;
+      }
+
+      :host placetobe-navigation-bar[hidden] {
+        display: none;
       }
 
       :host footer {
@@ -161,23 +201,19 @@ Placetobe Campaign Page
         background-color: white;
       }
 
-      google-youtube {
-        margin-top: calc( var(--placetobe-margin) * 2 );
-      }
-
     </style>
 
     <template is="dom-if" if="[[showInvestPage]]">
     <iframe
       id="invest-page"
-      src$="http://can.local/widget/#/[[campaignId]]/investeer"
+      src="http://can.local/widget/#/[[campaignId]]/investeer"
     ></iframe>
     </template>
 
     <placetobe-navigation-bar hidden$="[[!showInvestPage]]" data-sticky>
       <li slot="navigation" data-selected$="[[showStory]]"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
       <li slot="navigation" data-selected$="[[showDownloads]]"><a href$="/campagnes/[[campaignId]]/downloads">Downloads</a></li>
-      <a slot="footer" class="button" href$="/campagnes/[[campaignId]]/investeer">investeer</a>
+      <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
     </placetobe-navigation-bar>
 
     <app-location
@@ -200,7 +236,7 @@ Placetobe Campaign Page
 
     <caas-campaign
       api-endpoint="[[apiEndpoint]]"
-      id="[[campaignId]]"
+      campaign-id="[[campaignId]]"
       title="{{title}}"
       introduction-text="{{introductionText}}"
       image-url="{{imageUrl}}"
@@ -213,10 +249,16 @@ Placetobe Campaign Page
       files="{{downloads}}"
     ></caas-campaign-files>
 
+    <caas-campaign-incentives
+      api-endpoint="[[apiEndpoint]]"
+      campaign-id="[[campaignId]]"
+      incentives="{{incentives}}"
+    ></caas-campaign-incentives>
+
       <placetobe-navigation-bar id="stickyNavigationBar" hidden$="[[stickyNavBarHidden]]" data-sticky>
         <li slot="navigation" data-selected$="[[showStory]]"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
         <li slot="navigation" data-selected$="[[showDownloads]]"><a href$="/campagnes/[[campaignId]]/downloads">Downloads</a></li>
-        <a slot="footer" class="button" href$="/campagnes/[[campaignId]]/investeer">investeer</a>
+        <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
       </placetobe-navigation-bar>
 
       <header>
@@ -242,34 +284,62 @@ Placetobe Campaign Page
     <placetobe-navigation-bar id="navigationBar">
         <li slot="navigation" data-selected$="[[showStory]]"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
         <li slot="navigation" data-selected$="[[showDownloads]]"><a href$="/campagnes/[[campaignId]]/downloads">Downloads</a></li>
-        <a slot="footer" class="button" href$="/campagnes/[[campaignId]]/investeer">investeer</a>
+        <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
     </placetobe-navigation-bar>
 
     <main>
 
-      <google-youtube
-        hidden$="[[!showStory]]"
-        video-id="ETfiUYij5UE"
-        height="400px"
-        width="100%"
-        rel="0"
-        start="5"
-        autoplay="0">
-      </google-youtube>
+      <div class="two-column">
 
-      <article id="campaignText" hidden$="[[!showStory]]"></article>
+        <google-youtube
+          hidden$="[[!showStory]]"
+          video-id="ETfiUYij5UE"
+          height="400px"
+          width="100%"
+          rel="0"
+          start="5"
+          autoplay="0">
+        </google-youtube>
 
-      <template is="dom-if" if="[[showDownloads]]">
-        <ul id="downloads">
-          <template is="dom-repeat" items="[[downloads]]">
-          <li>
-            <h5>[[item.name]]</h5>
-            <article hidden$="[[!item.description]]">[[item.description]]</article>
-            <a class="button" href$="[[item.url]]" download>download bestand</a>
-          </li>
+        <article id="campaignText" hidden$="[[!showStory]]"></article>
+
+        <template is="dom-if" if="[[showDownloads]]">
+          <ul id="downloads">
+            <template is="dom-repeat" items="[[downloads]]">
+            <li>
+              <h5>[[item.name]]</h5>
+              <article hidden$="[[!item.description]]">[[item.description]]</article>
+              <a class="button" href$="[[item.url]]" download>download bestand</a>
+            </li>
+            </template>
+          </ul>
+        </template>
+
+      </div>
+
+      <aside>
+
+        <template is="dom-if" if="[[incentives]]">
+        
+        <placetobe-harmonica title="Beloningen">
+
+          <template is="dom-repeat" items="[[incentives]]">
+
+          <placetobe-card title="€[[item.minimumInvestment]] of meer" collapsible collapsed>
+            <article slot="main">
+            [[item.message]]<p>
+            <b slot="main" hidden$="[[!item.hasInvestors]]">[[item.investorCount]] investeerders kozen hiervoor</b>
+            </article>
+            <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
+          </placetobe-card>
+
           </template>
-        </ul>
-      </template>
+
+        </placetobe-harmonica>
+
+        </template>
+
+      </aside>
 
     </main>
 
@@ -298,8 +368,6 @@ Placetobe Campaign Page
     Polymer({
 
       is: 'placetobe-campaign-page',
-      behaviors: [PlacetobeStylesBehavior],
-
       behaviors: [PlacetobeStylesBehavior],
 
       ready: function() {
@@ -363,6 +431,10 @@ Placetobe Campaign Page
         showInvestPage: {
           type: Boolean,
           computed: '_computeShowInvestPage(pageParams.section)'
+        },
+
+        incentives: {
+          type: Array
         }
 
       },
