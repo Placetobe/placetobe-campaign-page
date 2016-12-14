@@ -1,6 +1,8 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-image/iron-image.html">
 <link rel="import" href="../google-youtube/google-youtube.html">
+<link rel="import" href="../google-map/google-map.html">
+<link rel="import" href="../google-map/google-map-marker.html">
 <link rel="import" href="../app-route/app-location.html">
 <link rel="import" href="../app-route/app-route.html">
 <link rel="import" href="../caas-campaign/caas-campaign.html">
@@ -58,7 +60,7 @@ Placetobe Campaign Page
         max-width: var(--placetobe-layout-width);
         position: relative;
         z-index: 1;
-        margin: 0 auto -118px auto;
+        margin: 0 auto -108px auto;
         padding: var(--placetobe-margin);
       }
 
@@ -209,6 +211,13 @@ Placetobe Campaign Page
         max-width: 100%;
       }
 
+      google-map {
+        width: 100%;
+        height:600px;
+        max-height: 50vh;
+        pointer-events: none;
+      }
+
       :host aside placetobe-harmonica {
         margin-bottom: var(--placetobe-margin);
       }
@@ -223,8 +232,7 @@ Placetobe Campaign Page
     </template>
 
     <placetobe-navigation-bar hidden$="[[!showInvestPage]]" data-sticky>
-      <li slot="navigation" data-selected$="[[showStory]]"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
-      <li slot="navigation" data-selected$="[[showDownloads]]"><a href$="/campagnes/[[campaignId]]/downloads">Downloads</a></li>
+      <li slot="navigation"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
       <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
     </placetobe-navigation-bar>
 
@@ -253,6 +261,7 @@ Placetobe Campaign Page
       introduction-text="{{introductionText}}"
       image-url="{{imageUrl}}"
       body-text="{{campaignText}}"
+      geo-location="{{geoLocation}}"
     ></caas-campaign>
 
     <caas-campaign-downloads
@@ -268,7 +277,7 @@ Placetobe Campaign Page
     ></caas-campaign-incentives>
 
       <placetobe-navigation-bar id="stickyNavigationBar" hidden$="[[stickyNavBarHidden]]" data-sticky>
-        <li slot="navigation" data-selected$="[[showStory]]"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
+        <li slot="navigation"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
         <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
       </placetobe-navigation-bar>
 
@@ -293,7 +302,7 @@ Placetobe Campaign Page
     </template>
 
     <placetobe-navigation-bar id="navigationBar">
-        <li slot="navigation" data-selected$="[[showStory]]"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
+        <li slot="navigation"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
         <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
     </placetobe-navigation-bar>
 
@@ -340,7 +349,7 @@ Placetobe Campaign Page
                 <article slot="main">
                 [[item.type]] ([[item.size.megabytes]] Mb)
                 </article>
-                <placetobe-button slot="footer" href="[[item.url]]" target="_blank"><span>download bestand</span></placetobe-button>
+                <placetobe-button slot="footer" href="[[item.url]]" target="_blank"><span>download</span></placetobe-button>
               </placetobe-card>
 
             </template>
@@ -360,13 +369,24 @@ Placetobe Campaign Page
       ></placetobe-campaign-stats-card>
     </footer>
 
-    <iron-image
-      id="coverImage"
-      preload
-      fade
-      sizing="cover"
-      src="[[imageUrl]]"
-    ></iron-image>
+    <google-map
+      latitude="[[geoLocation.lat]]"
+      longitude="[[geoLocation.lng]]"
+      api-key="AIzaSyAgZCRoae3GgaFraL2V7vUHcvsdoWj3Fus"
+      disable-default-ui
+      disable-zoom
+      disable-map-type-control
+      fit-to-markers
+      drag-events="false"
+      zoom="13"
+    >
+      <google-map-marker
+        latitude="[[geoLocation.lat]]"
+        longitude="[[geoLocation.lng]]"
+        title="[[title]]"
+      ></google-map-marker>
+
+    </google-map>
 
     </template>
 
