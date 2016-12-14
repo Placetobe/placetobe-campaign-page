@@ -15,6 +15,9 @@
 <link rel="import" href="../placetobe-harmonica/placetobe-harmonica.html">
 <link rel="import" href="../placetobe-button/placetobe-button.html">
 <link rel="import" href="../placetobe-card/placetobe-card.html">
+<link rel="import" href="../placetobe-icons/placetobe-facebook-icon.html">
+<link rel="import" href="../placetobe-icons/placetobe-twitter-icon.html">
+<link rel="import" href="../placetobe-icons/placetobe-linkedin-icon.html">
 
 <!--
 `placetobe-campaign-page`
@@ -222,6 +225,14 @@ Placetobe Campaign Page
         margin-bottom: var(--placetobe-margin);
       }
 
+      #follow-us placetobe-button {
+        margin: 0 calc(var(--placetobe-margin) / 2)
+      }
+
+      #follow-us .icon {
+        height: calc(var(--placetobe-margin) * 1.5);
+        width: calc(var(--placetobe-margin) * 1.5);
+      }
     </style>
 
     <template is="dom-if" if="[[showInvestPage]]">
@@ -262,6 +273,9 @@ Placetobe Campaign Page
       image-url="{{imageUrl}}"
       body-text="{{campaignText}}"
       geo-location="{{geoLocation}}"
+      facebook-url="{{facebookUrl}}"
+      twitter-url="{{twitterUrl}}"
+      linked-in-url="{{linkedInUrl}}"
     ></caas-campaign>
 
     <caas-campaign-downloads
@@ -355,6 +369,17 @@ Placetobe Campaign Page
             </template>
           </placetobe-harmonica>
         </template>
+        
+        <placetobe-card title="Volg ons" id="follow-us">
+          <article slot="main">
+            Blijf op de hoogte dit project via social media.
+          </article>
+          <div slot="footer">
+            <placetobe-button href="[[facebookUrl]]" target="_blank" link hidden$="[[!facebookUrl]]"><placetobe-facebook-icon class="icon"></placetobe-facebook-icon></placetobe-button>
+            <placetobe-button href="[[twitterUrl]]" target="_blank" link hidden$="[[!twitterUrl]]"><placetobe-twitter-icon class="icon"></placetobe-twitter-icon></placetobe-button>
+            <placetobe-button href="[[linkedInUrl]]" target="_blank" link hidden$="[[!linkedInUrl]]"><placetobe-linkedin-icon class="icon"></placetobe-linkedin-icon></placetobe-button>
+         </div>
+        </placetobe-card>
 
       </aside>
 
