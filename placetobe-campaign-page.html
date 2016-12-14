@@ -4,7 +4,7 @@
 <link rel="import" href="../app-route/app-location.html">
 <link rel="import" href="../app-route/app-route.html">
 <link rel="import" href="../caas-campaign/caas-campaign.html">
-<link rel="import" href="../caas-campaign-files/caas-campaign-files.html">
+<link rel="import" href="../caas-campaign-downloads/caas-campaign-downloads.html">
 <link rel="import" href="../caas-campaign-incentives/caas-campaign-incentives.html">
 <link rel="import" href="../placetobe-behaviors/placetobe-styles-behavior.html">
 <link rel="import" href="../placetobe-styles/placetobe-styles.html">
@@ -209,6 +209,10 @@ Placetobe Campaign Page
         max-width: 100%;
       }
 
+      :host aside placetobe-harmonica {
+        margin-bottom: var(--placetobe-margin);
+      }
+
     </style>
 
     <template is="dom-if" if="[[showInvestPage]]">
@@ -251,11 +255,11 @@ Placetobe Campaign Page
       body-text="{{campaignText}}"
     ></caas-campaign>
 
-    <caas-campaign-files
+    <caas-campaign-downloads
       api-endpoint="[[apiEndpoint]]"
       campaign-id="[[campaignId]]"
-      files="{{downloads}}"
-    ></caas-campaign-files>
+      items="{{downloads}}"
+    ></caas-campaign-downloads>
 
     <caas-campaign-incentives
       api-endpoint="[[apiEndpoint]]"
@@ -265,7 +269,6 @@ Placetobe Campaign Page
 
       <placetobe-navigation-bar id="stickyNavigationBar" hidden$="[[stickyNavBarHidden]]" data-sticky>
         <li slot="navigation" data-selected$="[[showStory]]"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
-        <li slot="navigation" data-selected$="[[showDownloads]]"><a href$="/campagnes/[[campaignId]]/downloads">Downloads</a></li>
         <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
       </placetobe-navigation-bar>
 
@@ -291,7 +294,6 @@ Placetobe Campaign Page
 
     <placetobe-navigation-bar id="navigationBar">
         <li slot="navigation" data-selected$="[[showStory]]"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
-        <li slot="navigation" data-selected$="[[showDownloads]]"><a href$="/campagnes/[[campaignId]]/downloads">Downloads</a></li>
         <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
     </placetobe-navigation-bar>
 
@@ -300,7 +302,6 @@ Placetobe Campaign Page
       <div class="two-column">
 
         <google-youtube
-          hidden$="[[!showStory]]"
           video-id="ETfiUYij5UE"
           height="400px"
           width="100%"
@@ -309,42 +310,41 @@ Placetobe Campaign Page
           autoplay="0">
         </google-youtube>
 
-        <article id="campaignText" hidden$="[[!showStory]]"></article>
-
-        <template is="dom-if" if="[[showDownloads]]">
-          <ul id="downloads">
-            <template is="dom-repeat" items="[[downloads]]">
-            <li>
-              <h5>[[item.name]]</h5>
-              <article hidden$="[[!item.description]]">[[item.description]]</article>
-              <a class="button" href$="[[item.url]]" download>download bestand</a>
-            </li>
-            </template>
-          </ul>
-        </template>
+        <article id="campaignText"></article>
 
       </div>
 
       <aside>
 
         <template is="dom-if" if="[[incentives]]">
-        
-        <placetobe-harmonica title="Beloningen">
+          <placetobe-harmonica title="Beloningen">
+            <template is="dom-repeat" items="[[incentives]]">
 
-          <template is="dom-repeat" items="[[incentives]]">
+              <placetobe-card title="€[[item.minimumInvestment]] of meer" collapsible collapsed>
+                <article slot="main">
+                [[item.message]]<p>
+                <b slot="main" hidden$="[[!item.hasInvestors]]">[[item.investorCount]] investeerders kozen hiervoor</b>
+                </article>
+                <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
+              </placetobe-card>
 
-          <placetobe-card title="€[[item.minimumInvestment]] of meer" collapsible collapsed>
-            <article slot="main">
-            [[item.message]]<p>
-            <b slot="main" hidden$="[[!item.hasInvestors]]">[[item.investorCount]] investeerders kozen hiervoor</b>
-            </article>
-            <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
-          </placetobe-card>
+            </template>
+          </placetobe-harmonica>
+        </template>
 
-          </template>
+        <template is="dom-if" if="[[downloads]]">
+          <placetobe-harmonica title="Downloads">
+            <template is="dom-repeat" items="[[downloads]]">
 
-        </placetobe-harmonica>
+              <placetobe-card title="[[item.name]]" collapsible collapsed>
+                <article slot="main">
+                [[item.type]] ([[item.size.megabytes]] Mb)
+                </article>
+                <placetobe-button slot="footer" href="[[item.url]]" target="_blank"><span>download bestand</span></placetobe-button>
+              </placetobe-card>
 
+            </template>
+          </placetobe-harmonica>
         </template>
 
       </aside>
