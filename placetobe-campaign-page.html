@@ -257,7 +257,7 @@ Placetobe Campaign Page
     </template>
 
     <placetobe-navigation-bar hidden$="[[!showInvestPage]]" data-sticky>
-      <li slot="navigation"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
+      <li slot="navigation">[[title]]</li>
       <placetobe-facebook-icon on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
       <placetobe-twitter-icon on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
       <placetobe-linkedin-icon on-tap="shareOnLinkedin" class="icon" slot="footer"></placetobe-linkedin-icon>
@@ -308,7 +308,7 @@ Placetobe Campaign Page
     ></caas-campaign-incentives>
 
       <placetobe-navigation-bar id="stickyNavigationBar" hidden$="[[stickyNavBarHidden]]" data-sticky>
-        <li slot="navigation"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
+        <li slot="navigation">[[title]]</li>
         <placetobe-facebook-icon on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
         <placetobe-twitter-icon on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
         <placetobe-linkedin-icon on-tap="shareOnLinkedin" class="icon" slot="footer"></placetobe-linkedin-icon>
@@ -336,7 +336,7 @@ Placetobe Campaign Page
     </template>
 
     <placetobe-navigation-bar id="navigationBar">
-        <li slot="navigation"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
+        <li slot="navigation">[[title]]</li>
         <placetobe-facebook-icon on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
         <placetobe-twitter-icon on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
         <placetobe-linkedin-icon on-tap="shareOnLinkedin" class="icon" slot="footer"></placetobe-linkedin-icon>
