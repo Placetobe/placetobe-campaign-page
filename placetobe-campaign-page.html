@@ -238,6 +238,15 @@ Placetobe Campaign Page
         height: calc(var(--placetobe-margin) * 1.5);
         width: calc(var(--placetobe-margin) * 1.5);
       }
+
+      :host .icon {
+        @apply(--placetobe-border-box);
+        height: calc( var(--placetobe-margin) * 3);
+        width: calc( var(--placetobe-margin) * 2);
+        padding: var(--placetobe-margin) calc( var(--placetobe-margin) / 2);
+        margin-right: var(--placetobe-margin);
+        cursor: pointer;
+      }
     </style>
 
     <template is="dom-if" if="[[showInvestPage]]">
@@ -249,6 +258,9 @@ Placetobe Campaign Page
 
     <placetobe-navigation-bar hidden$="[[!showInvestPage]]" data-sticky>
       <li slot="navigation"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
+      <placetobe-facebook-icon on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
+      <placetobe-twitter-icon on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
+      <placetobe-linkedin-icon on-tap="shareOnLinkedin" class="icon" slot="footer"></placetobe-linkedin-icon>
       <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
     </placetobe-navigation-bar>
 
@@ -297,6 +309,9 @@ Placetobe Campaign Page
 
       <placetobe-navigation-bar id="stickyNavigationBar" hidden$="[[stickyNavBarHidden]]" data-sticky>
         <li slot="navigation"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
+        <placetobe-facebook-icon on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
+        <placetobe-twitter-icon on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
+        <placetobe-linkedin-icon on-tap="shareOnLinkedin" class="icon" slot="footer"></placetobe-linkedin-icon>
         <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
       </placetobe-navigation-bar>
 
@@ -322,6 +337,9 @@ Placetobe Campaign Page
 
     <placetobe-navigation-bar id="navigationBar">
         <li slot="navigation"><a href$="/campagnes/[[campaignId]]/verhaal">[[title]]</a></li>
+        <placetobe-facebook-icon on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
+        <placetobe-twitter-icon on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
+        <placetobe-linkedin-icon on-tap="shareOnLinkedin" class="icon" slot="footer"></placetobe-linkedin-icon>
         <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
     </placetobe-navigation-bar>
 
@@ -493,8 +511,27 @@ Placetobe Campaign Page
 
         incentives: {
           type: Array
+        },
+
+        imageUrl: {
+          type: String
         }
 
+      },
+
+      shareOnFacebook: function() {
+        var url = "https://www.facebook.com/sharer.php?s=100&p[url]=https://development.placetobe.nl/campagnes/"+this.campaignId;
+        window.open(url,"Share on Facebook");
+      },
+
+      shareOnTwitter: function() {
+        var url = "https://twitter.com/intent/tweet?url=https://development.placetobe.nl/campagnes/"+this.campaignId;
+        window.open(url,"Share on Twitter");
+      },
+
+      shareOnLinkedin: function() {
+        var url = "https://www.linkedin.com/shareArticle?mini=true&url=https://development.placetobe.nl/campagnes/"+this.campaignId;
+        window.open(url,"Share on LinkedIn");
       },
 
       _setScrollPositions: function(evt) {
