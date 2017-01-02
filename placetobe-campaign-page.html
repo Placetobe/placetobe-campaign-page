@@ -251,19 +251,11 @@ Placetobe Campaign Page
     </style>
 
     <template is="dom-if" if="[[showInvestPage]]">
-    <iframe
-      id="invest-page"
-      src="http://can.local/widget/#/[[campaignId]]/investeer"
-    ></iframe>
+      <iframe
+        id="invest-page"
+        src="http://can.local/widget/#/[[campaignId]]/investeer"
+      ></iframe>
     </template>
-
-    <placetobe-navigation-bar hidden$="[[!showInvestPage]]" data-sticky>
-      <li slot="navigation">[[title]]</li>
-      <placetobe-facebook-icon on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
-      <placetobe-twitter-icon on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
-      <placetobe-linkedin-icon on-tap="shareOnLinkedin" class="icon" slot="footer"></placetobe-linkedin-icon>
-      <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
-    </placetobe-navigation-bar>
 
     <app-location
       route="{{campaignRoute}}"
@@ -533,18 +525,22 @@ Placetobe Campaign Page
       },
 
       shareOnFacebook: function() {
-        var url = "https://www.facebook.com/sharer.php?s=100&p[url]=https://development.placetobe.nl/campagnes/"+this.campaignId;
+        var url = 'https://www.facebook.com/sharer.php?s=100&p[url]=' + this._getHostUrl() + '/campagnes/'+this.campaignId;
         window.open(url,"Share on Facebook");
       },
 
       shareOnTwitter: function() {
-        var url = "https://twitter.com/intent/tweet?url=https://development.placetobe.nl/campagnes/"+this.campaignId;
+        var url = 'https://twitter.com/intent/tweet?url=' + this._getHostUrl() + '/campagnes/'+this.campaignId;
         window.open(url,"Share on Twitter");
       },
 
       shareOnLinkedin: function() {
-        var url = "https://www.linkedin.com/shareArticle?mini=true&url=https://development.placetobe.nl/campagnes/"+this.campaignId;
+        var url = 'https://www.linkedin.com/shareArticle?mini=true&url=' + this._getHostUrl() + '/campagnes/'+this.campaignId;
         window.open(url,"Share on LinkedIn");
+      },
+
+      _getHostUrl: function() {
+        return window.location.protocol + '//' + window.location.host;
       },
 
       _setScrollPositions: function(evt) {
