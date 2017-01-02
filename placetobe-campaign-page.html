@@ -287,6 +287,7 @@ Placetobe Campaign Page
       twitter-url="{{twitterUrl}}"
       linked-in-url="{{linkedInUrl}}"
       video="{{video}}"
+      active="{{campaignActive}}"
     ></caas-campaign>
 
     <caas-campaign-downloads
@@ -306,7 +307,10 @@ Placetobe Campaign Page
         <placetobe-facebook-icon on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
         <placetobe-twitter-icon on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
         <placetobe-linkedin-icon on-tap="shareOnLinkedin" class="icon" slot="footer"></placetobe-linkedin-icon>
-        <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
+        <placetobe-button
+          hidden$="[[!campaignActive]]"
+          slot="footer"
+          href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
       </placetobe-navigation-bar>
 
       <header>
@@ -334,7 +338,11 @@ Placetobe Campaign Page
         <placetobe-facebook-icon on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
         <placetobe-twitter-icon on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
         <placetobe-linkedin-icon on-tap="shareOnLinkedin" class="icon" slot="footer"></placetobe-linkedin-icon>
-        <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
+        <placetobe-button
+          hidden$="[[!campaignActive]]"
+          slot="footer"
+          href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
+      </placetobe-navigation-bar>
     </placetobe-navigation-bar>
 
     <main>
