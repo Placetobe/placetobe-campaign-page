@@ -375,7 +375,7 @@ Placetobe Campaign Page
 
       <aside>
 
-        <template is="dom-if" if="[[incentives]]">
+        <template is="dom-if" if="[[incentives.0]]">
           <placetobe-harmonica title="Beloningen">
             <template is="dom-repeat" items="[[incentives]]">
 
@@ -391,7 +391,7 @@ Placetobe Campaign Page
           </placetobe-harmonica>
         </template>
 
-        <template is="dom-if" if="[[downloads]]">
+        <template is="dom-if" if="[[downloads.0]]">
           <placetobe-harmonica title="Downloads">
             <template is="dom-repeat" items="[[downloads]]">
 
