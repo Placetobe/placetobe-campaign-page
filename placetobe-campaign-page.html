@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-image/iron-image.html">
 <link rel="import" href="../google-youtube/google-youtube.html">
+<link rel="import" href="../vimeo-video/vimeo-video.html">
 <link rel="import" href="../google-map/google-map.html">
 <link rel="import" href="../google-map/google-map-marker.html">
 <link rel="import" href="../app-route/app-location.html">
@@ -293,6 +294,7 @@ Placetobe Campaign Page
       facebook-url="{{facebookUrl}}"
       twitter-url="{{twitterUrl}}"
       linked-in-url="{{linkedInUrl}}"
+      video="{{video}}"
     ></caas-campaign>
 
     <caas-campaign-downloads
@@ -347,14 +349,25 @@ Placetobe Campaign Page
 
       <div class="two-column">
 
-        <google-youtube
-          video-id="ETfiUYij5UE"
-          height="400px"
-          width="100%"
-          rel="0"
-          start="5"
-          autoplay="0">
-        </google-youtube>
+
+        <template is="dom-if" if="[[video.youtube]]">
+          <google-youtube
+            video-id="[[video.youtube.id]]"
+            height="400px"
+            width="100%"
+            rel="0"
+            start="5"
+            autoplay="0">
+          </google-youtube>
+        </template>
+
+        <template is="dom-if" if="[[video.vimeo]]">
+          <vimeo-video
+              video-id="[[video.vimeo.id]]"
+              container-width="100%"
+              style="height:400px"
+          ></vimeo-video>
+        </template>
 
         <article id="campaignText"></article>
 
