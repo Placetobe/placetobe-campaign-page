@@ -4,8 +4,6 @@
 <link rel="import" href="../vimeo-video/vimeo-video.html">
 <link rel="import" href="../google-map/google-map.html">
 <link rel="import" href="../google-map/google-map-marker.html">
-<link rel="import" href="../app-route/app-location.html">
-<link rel="import" href="../app-route/app-route.html">
 <link rel="import" href="../caas-campaign/caas-campaign.html">
 <link rel="import" href="../caas-campaign-downloads/caas-campaign-downloads.html">
 <link rel="import" href="../caas-campaign-incentives/caas-campaign-incentives.html">
@@ -16,6 +14,7 @@
 <link rel="import" href="../placetobe-harmonica/placetobe-harmonica.html">
 <link rel="import" href="../placetobe-button/placetobe-button.html">
 <link rel="import" href="../placetobe-card/placetobe-card.html">
+<link rel="import" href="../placetobe-popup/placetobe-popup.html">
 <link rel="import" href="../placetobe-icons/placetobe-facebook-icon.html">
 <link rel="import" href="../placetobe-icons/placetobe-twitter-icon.html">
 <link rel="import" href="../placetobe-icons/placetobe-linkedin-icon.html">
@@ -124,33 +123,6 @@ Placetobe Campaign Page
         @apply(--placetobe-default-button);
       }
 
-      :host #downloads {
-        margin:0;
-        padding: 0;
-        list-style: none;
-      }
-
-      #downloads li {
-        margin: calc( var(--placetobe-margin) * 3 ) 0;
-        padding: 0;
-      }
-
-      #downloads li h5 {
-        @apply(--placetobe-font-heading1);
-        margin: 0 0 var(--placetobe-margin) 0;
-      }
-
-      #downloads li article {
-        @apply(--placetobe-font-body-serif);
-        margin: var(--placetobe-margin) 0;
-      }
-
-      #downloads li a {
-        margin-top: var(--placetobe-margin);
-        display: inline-block;
-        background-color: var(--placetobe-color-green);
-      }
-
       :host main article {
         @apply(--placetobe-font-body);
         margin: calc( var(--placetobe-margin) * 2 ) 0;
@@ -208,17 +180,18 @@ Placetobe Campaign Page
         z-index: 1;
       }
 
+      #invest-page-popup {
+        z-index: 11;
+      }
+
+      #invest-page-popup h3 {
+        @apply --placetobe-font-heading4;
+      }
+
       #invest-page {
-        position: fixed;
-        top: 80px;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 9;
         border: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: white;
+        width: 100%;
+        height: 70vh;
       }
 
       google-youtube {
@@ -255,30 +228,29 @@ Placetobe Campaign Page
       }
     </style>
 
-    <template is="dom-if" if="[[showInvestPage]]">
-      <iframe
-        id="invest-page"
-        src="http://can.local/widget/#/[[campaignId]]/investeer"
-      ></iframe>
-    </template>
+      <placetobe-popup
+        id="invest-page-popup"
+        opened="[[!investPageHidden]]"
+        on-popup-closed="hideInvestPage">
+        <template is="dom-if" if="[[!investPageHidden]]">
 
-    <app-location
-      route="{{campaignRoute}}"
-      path="{{campaignPath}}"
-      url-space-regex="^/campagnes/(.*?)"
-    ></app-location>
+          <section hidden$="[[canWarningHidden]]">
+            <h3>Placetobe is een partnerplatform van CrowdAboutNow. Dit betekent dat het daadwerkelijke investeerproces verloopt via crowdaboutnow.nl.</h3>
 
-    <app-route
-      route="{{campaignRoute}}"
-      pattern="/campagnes/:slug"
-      tail="{{campaignPageSection}}"
-    ></app-route>
+            <placetobe-button
+              on-tap="hideCanWarning"
+            ><span>melding verbergen</span>
+            </placetobe-button>
+            <br>
+            <br>
+          </section>
 
-    <app-route
-      route="{{campaignPageSection}}"
-      pattern="/:section"
-      data="{{pageParams}}"
-    ></app-route>
+          <iframe
+            id="invest-page"
+            src$="https://crowdaboutnow.nl/widget/#/[[campaignId]]/investeer"
+          ></iframe>
+        </template>
+      </placetobe-popup>
 
     <caas-campaign
       api-endpoint="[[apiEndpoint]]"
@@ -315,7 +287,8 @@ Placetobe Campaign Page
         <placetobe-button
           hidden$="[[!campaignActive]]"
           slot="footer"
-          href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
+          on-tap="showInvestPage"
+        ><span>investeer</span></placetobe-button>
       </placetobe-navigation-bar>
 
       <header>
@@ -323,7 +296,6 @@ Placetobe Campaign Page
         <h2>[[introductionText]]</h2>
       </header>
 
-    <template is="dom-if" if="[[showStory]]">
       <placetobe-campaign-stats-card
         api-endpoint="[[apiEndpoint]]"
         campaign-id="[[campaignId]]"
@@ -336,7 +308,6 @@ Placetobe Campaign Page
         sizing="cover"
         src="[[imageUrl]]"
       ></iron-image>
-    </template>
 
     <placetobe-navigation-bar id="navigationBar">
         <li slot="navigation">[[title]]</li>
@@ -346,7 +317,8 @@ Placetobe Campaign Page
         <placetobe-button
           hidden$="[[!campaignActive]]"
           slot="footer"
-          href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
+          on-tap="showInvestPage"
+        ><span>investeer</span></placetobe-button>
       </placetobe-navigation-bar>
     </placetobe-navigation-bar>
 
@@ -507,24 +479,14 @@ Placetobe Campaign Page
           value: 0          
         },
 
-        pageParams: {
-          type: Object,
-          value: null
+        investPageHidden: {
+          type: Boolean,
+          value: true
         },
 
-        showDownloads: {
+        canWarningHidden: {
           type: Boolean,
-          computed: '_computeShowDownloads(pageParams.section)'
-        },
-
-        showStory: {
-          type: Boolean,
-          computed: '_computeShowStory(pageParams.section)'
-        },
-
-        showInvestPage: {
-          type: Boolean,
-          computed: '_computeShowInvestPage(pageParams.section)'
+          value: false
         },
 
         incentives: {
@@ -535,6 +497,18 @@ Placetobe Campaign Page
           type: String
         }
 
+      },
+
+      showInvestPage: function() {
+        this.investPageHidden = false;
+      },
+
+      hideCanWarning: function() {
+        this.canWarningHidden = true;
+      },
+
+      hideInvestPage: function() {
+        this.investPageHidden = true;
       },
 
       shareOnFacebook: function() {
@@ -567,18 +541,6 @@ Placetobe Campaign Page
 
       _computeStickyNavBarHidden: function(scrollY, navigationBarY) {
         return (scrollY <= navigationBarY);
-      },
-
-      _computeShowStory: function(pageSection) {
-        return (!pageSection || pageSection == 'verhaal');
-      },
-
-      _computeShowDownloads: function(pageSection) {
-        return (pageSection === 'downloads');
-      },
-
-      _computeShowInvestPage: function(pageSection) {
-        return (pageSection === 'investeer');
       }
 
     });
