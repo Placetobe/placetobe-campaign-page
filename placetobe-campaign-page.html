@@ -108,7 +108,12 @@ Placetobe Campaign Page
       :host main > *:nth-child(1) {
         @apply(--placetobe-flex-item--2);
         margin-bottom: var(--placetobe-margin);
-        padding-right: var(--placetobe-margin);
+      }
+
+      @media(min-width: 601px) {
+        :host main > *:nth-child(1) {
+          padding-right: var(--placetobe-margin);
+        }
       }
 
       :host main > *:nth-child(2) {
