@@ -16,6 +16,7 @@
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../app-route/app-location.html">
 
     <link rel="import" href="../placetobe-campaign-page.html">
 
@@ -28,10 +29,20 @@
   </head>
   <body>
 
-    <placetobe-campaign-page
-      api-endpoint="http://canapi.local"
-      campaign-id="719"
-    ></placetobe-campaign-page>      
+    <template is="dom-bind">
+
+      <placetobe-campaign-page
+        api-endpoint="http://canapi.local"
+        campaign-id="719"
+        route="{{route}}"
+      ></placetobe-campaign-page>
+
+      <app-location
+        route="{{route}}"
+      ></app-location>
+
+    </template>
+
 
   </body>
 </html>

@@ -19,6 +19,7 @@
 <link rel="import" href="../placetobe-icons/placetobe-facebook-icon.html">
 <link rel="import" href="../placetobe-icons/placetobe-twitter-icon.html">
 <link rel="import" href="../placetobe-icons/placetobe-linkedin-icon.html">
+<link rel="import" href="../placetobe-route/placetobe-route.html">
 
 <!--
 `placetobe-campaign-page`
@@ -248,6 +249,10 @@ Placetobe Campaign Page
             contract-type-id="2"
             username="investor@caastest.local"
             password="abc123"
+            success-callback-url="[[_computeURL(route.path)]]/success"
+            cancel-callback-url="[[_computeURL(route.path)]]/cancel"
+            error-callback-url="[[_computeURL(route.path)]]/error"
+            reject-callback-url="[[_computeURL(route.path)]]/reject"
           ></placetobe-invest-page>
 
         </template>
@@ -459,6 +464,10 @@ Placetobe Campaign Page
           value: null,          
         },
 
+        route: {
+          type: Object
+        },
+
         campaignText: {
           type: String,
           value: null,
@@ -542,6 +551,10 @@ Placetobe Campaign Page
 
       _computeStickyNavBarHidden: function(scrollY, navigationBarY) {
         return (scrollY <= navigationBarY);
+      },
+
+      _computeURL: function(path) {
+        return window.location.href;
       }
 
     });
