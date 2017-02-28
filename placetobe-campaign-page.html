@@ -7,6 +7,7 @@
 <link rel="import" href="../caas-campaign/caas-campaign.html">
 <link rel="import" href="../caas-campaign-downloads/caas-campaign-downloads.html">
 <link rel="import" href="../caas-campaign-incentives/caas-campaign-incentives.html">
+<link rel="import" href="../placetobe-invest-page/placetobe-invest-page.html">
 <link rel="import" href="../placetobe-behaviors/placetobe-styles-behavior.html">
 <link rel="import" href="../placetobe-styles/placetobe-styles.html">
 <link rel="import" href="../placetobe-campaign-stats-card/placetobe-campaign-stats-card.html">
@@ -234,21 +235,14 @@ Placetobe Campaign Page
         on-popup-closed="hideInvestPage">
         <template is="dom-if" if="[[!investPageHidden]]">
 
-          <section hidden$="[[canWarningHidden]]">
-            <h3>Placetobe is een partnerplatform van CrowdAboutNow. Dit betekent dat het daadwerkelijke investeerproces verloopt via crowdaboutnow.nl.</h3>
+          <placetobe-invest-page
+            api-endpoint="[[apiEndpoint]]"
+            campaign-id="[[campaignId]]"
+            contract-type-id="2"
+            username="investor@caastest.local"
+            password="abc123"
+          ></placetobe-invest-page>
 
-            <placetobe-button
-              on-tap="hideCanWarning"
-            ><span>melding verbergen</span>
-            </placetobe-button>
-            <br>
-            <br>
-          </section>
-
-          <iframe
-            id="invest-page"
-            src$="https://crowdaboutnow.nl/widget/#/[[campaignId]]/investeer"
-          ></iframe>
         </template>
       </placetobe-popup>
 
