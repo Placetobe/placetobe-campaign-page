@@ -33,6 +33,13 @@ Placetobe Campaign Page
       :host {
         display: block;
         color: var(--placetobe-color-darkblue);
+        --placetobe-popup-content-height: 100vh;
+      }
+
+      @media(min-width: 601px) {
+        :host {
+          --placetobe-popup-content-height: 60vh;
+        }
       }
 
       :host header {
