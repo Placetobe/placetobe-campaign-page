@@ -33,6 +33,13 @@ Placetobe Campaign Page
       :host {
         display: block;
         color: var(--placetobe-color-darkblue);
+        --placetobe-popup-content-height: auto;
+      }
+
+      @media (min-width: 601px) {
+        :host {
+          --placetobe-popup-content-height: 75vh;
+        }
       }
 
       :host header {
@@ -282,7 +289,7 @@ Placetobe Campaign Page
           hidden$="[[!campaignActive]]"
           slot="footer"
           on-tap="showInvestPage"
-        ><span>investeer</span></placetobe-button>
+        ><span>investeren</span></placetobe-button>
       </placetobe-navigation-bar>
 
       <header>
@@ -293,7 +300,13 @@ Placetobe Campaign Page
       <placetobe-campaign-stats-card
         api-endpoint="[[apiEndpoint]]"
         campaign-id="[[campaignId]]"
-      ></placetobe-campaign-stats-card>
+        campaign-closed="{{campaignClosed}}"
+      >
+      <placetobe-button
+        hidden$="[[campaignClosed]]"
+        on-tap="showInvestPage"
+        ><span>investeren</span></placetobe-button>                    
+      </placetobe-campaign-stats-card>
 
       <iron-image
         id="coverImage"
@@ -312,7 +325,7 @@ Placetobe Campaign Page
           hidden$="[[!campaignActive]]"
           slot="footer"
           on-tap="showInvestPage"
-        ><span>investeer</span></placetobe-button>
+        ><span>investeren</span></placetobe-button>
       </placetobe-navigation-bar>
     </placetobe-navigation-bar>
 
@@ -456,6 +469,10 @@ Placetobe Campaign Page
           type: String,
           value: null,
           observer: '_parseCampaignText'
+        },
+
+        campaignClosed: {
+          type: Boolean
         },
 
         stickyNavBarHidden: {
