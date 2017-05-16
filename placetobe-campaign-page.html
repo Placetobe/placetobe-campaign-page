@@ -498,12 +498,18 @@ Placetobe Campaign Page
         },
 
         incentives: {
-          type: Array
+          type: Array,
+          computed: "_computeAvailablesIncentives(_groupedIncentives.*, contractTypes.*)"
         },
 
         imageUrl: {
           type: String
-        }
+        },
+
+        _groupedIncentives: {
+          type: Object
+        },
+        
         _scrollY: {
           type: Number,
           value: 0
@@ -541,6 +547,15 @@ Placetobe Campaign Page
       shareOnLinkedin: function() {
         var url = 'https://www.linkedin.com/shareArticle?mini=true&url=' + this._getHostUrl() + '/campagnes/'+this.campaignId;
         window.open(url,"Share on LinkedIn");
+      },
+
+      _computeAvailablesIncentives: function (groupedIncentives, contractTypes) {
+        var groupedIncentives = groupedIncentives.base;
+        var contractTypes = contractTypes.base;
+
+        // first item in contractTypes array is currently the only supported type for PlaceToBe
+        var incentives = groupedIncentives[contractTypes[0].id] || [];
+        return incentives;
       },
 
       _getHostUrl: function() {
