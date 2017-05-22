@@ -551,9 +551,9 @@ Placetobe Campaign Page
         window.open(url,"Share on LinkedIn");
       },
 
-      _computeAvailablesIncentives: function (groupedIncentives, contractTypes) {
-        var groupedIncentives = groupedIncentives.base;
-        var contractTypes = contractTypes.base;
+      _computeAvailablesIncentives: function (groupedIncentivesChanges, contractTypesChanges) {
+        var groupedIncentives = groupedIncentivesChanges.base;
+        var contractTypes = contractTypesChanges.base;
 
         // first item in contractTypes array is currently the only supported type for PlaceToBe
         var incentives = groupedIncentives[contractTypes[0].id] || [];
