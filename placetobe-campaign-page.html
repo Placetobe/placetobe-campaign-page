@@ -270,6 +270,7 @@ Placetobe Campaign Page
       twitter-url="{{twitterUrl}}"
       linked-in-url="{{linkedInUrl}}"
       video="{{video}}"
+      contract-types="{{contractTypes}}"
       active="{{campaignActive}}"
     ></caas-campaign>
 
@@ -282,7 +283,7 @@ Placetobe Campaign Page
     <caas-campaign-incentives
       api-endpoint="[[apiEndpoint]]"
       campaign-id="[[campaignId]]"
-      incentives="{{incentives}}"
+      grouped-incentives="{{_groupedIncentives}}"
       auto-download
     ></caas-campaign-incentives>
 
@@ -486,18 +487,12 @@ Placetobe Campaign Page
           computed: '_computeStickyNavBarHidden(_scrollY, _navigationBarY)'
         },
 
+        contractTypes: {
+          type: Array
+        },
+
         selectedIncentiveId: {
           type: String,
-        },
-
-        _scrollY: {
-          type: Number,
-          value: 0
-        },
-
-        _navigationBarY: {
-          type: Number,
-          value: 0          
         },
 
         investPageHidden: {
@@ -511,12 +506,27 @@ Placetobe Campaign Page
         },
 
         incentives: {
-          type: Array
+          type: Array,
+          computed: "_computeAvailablesIncentives(_groupedIncentives.*, contractTypes.*)"
         },
 
         imageUrl: {
           type: String
-        }
+        },
+
+        _groupedIncentives: {
+          type: Object
+        },
+        
+        _scrollY: {
+          type: Number,
+          value: 0
+        },
+
+        _navigationBarY: {
+          type: Number,
+          value: 0          
+        }           
 
       },
 
@@ -551,6 +561,15 @@ Placetobe Campaign Page
       shareOnLinkedin: function() {
         var url = 'https://www.linkedin.com/shareArticle?mini=true&url=' + this._getHostUrl() + '/campagnes/'+this.campaignId;
         window.open(url,"Share on LinkedIn");
+      },
+
+      _computeAvailablesIncentives: function (groupedIncentivesChanges, contractTypesChanges) {
+        var groupedIncentives = groupedIncentivesChanges.base;
+        var contractTypes = contractTypesChanges.base;
+
+        // first item in contractTypes array is currently the only supported type for PlaceToBe
+        var incentives = groupedIncentives[contractTypes[0].id] || [];
+        return incentives;
       },
 
       _getHostUrl: function() {
