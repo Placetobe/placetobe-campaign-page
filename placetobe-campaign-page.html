@@ -246,6 +246,7 @@ Placetobe Campaign Page
             api-endpoint="[[apiEndpoint]]"
             campaign-id="[[campaignId]]"
             contract-type-id="2"
+            incentive-id="{{selectedIncentiveId}}"
             success-callback-url="[[_getHostUrl(campaignId, apiEndpoint)]]/campagnes/[[campaignId]]/investeren/success"
             cancel-callback-url="[[_getHostUrl(campaignId, apiEndpoint)]]/campagnes/[[campaignId]]/investeren/cancel"
             error-callback-url="[[_getHostUrl(campaignId, apiEndpoint)]]/campagnes/[[campaignId]]/investeren/error"
@@ -283,6 +284,7 @@ Placetobe Campaign Page
       api-endpoint="[[apiEndpoint]]"
       campaign-id="[[campaignId]]"
       grouped-incentives="{{_groupedIncentives}}"
+      auto-download
     ></caas-campaign-incentives>
 
       <placetobe-navigation-bar id="stickyNavigationBar" hidden$="[[stickyNavBarHidden]]" data-sticky>
@@ -373,7 +375,7 @@ Placetobe Campaign Page
                 [[item.message]]<p>
                 <b slot="main" hidden$="[[!item.hasInvestors]]">[[item.investorCount]] investeerders kozen hiervoor</b>
                 </article>
-                <placetobe-button slot="footer" href="/campagnes/[[campaignId]]/investeer"><span>investeer</span></placetobe-button>
+                <placetobe-button slot="footer" hidden$="[[!campaignActive]]" on-tap="showInvestPageWithSelectedIncentive"><span>investeer</span></placetobe-button>
               </placetobe-card>
 
             </template>
@@ -489,6 +491,10 @@ Placetobe Campaign Page
           type: Array
         },
 
+        selectedIncentiveId: {
+          type: String,
+        },
+
         investPageHidden: {
           type: Boolean,
           value: true
@@ -526,6 +532,12 @@ Placetobe Campaign Page
 
       showInvestPage: function() {
         this.investPageHidden = false;
+      },
+
+      showInvestPageWithSelectedIncentive: function (evt) {
+        var selectedIncentiveId = evt.model.item.id;
+        this.set('selectedIncentiveId', selectedIncentiveId)
+        this.showInvestPage()
       },
 
       hideCanWarning: function() {
