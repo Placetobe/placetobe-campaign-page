@@ -33,7 +33,6 @@ Placetobe Campaign Page
       :host {
         display: block;
         color: var(--placetobe-color-darkblue);
-        --placetobe-popup-content-height: auto;
       }
 
       @media (min-width: 601px) {
@@ -242,7 +241,6 @@ Placetobe Campaign Page
         on-popup-closed="hideInvestPage"
         modal>
         <template is="dom-if" if="[[!investPageHidden]]">
-
           <placetobe-invest-page
             api-endpoint="[[apiEndpoint]]"
             campaign-id="[[campaignId]]"
