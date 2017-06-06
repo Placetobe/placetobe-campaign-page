@@ -238,9 +238,9 @@ Placetobe Campaign Page
       <placetobe-popup
         id="invest-page-popup"
         opened="[[!investPageHidden]]"
-        on-popup-closed="hideInvestPage">
-<!--         <template is="dom-if" if="[[!investPageHidden]]">
- -->
+        on-popup-closed="hideInvestPage"
+        modal>
+        <template is="dom-if" if="[[!investPageHidden]]">
           <placetobe-invest-page
             api-endpoint="[[apiEndpoint]]"
             campaign-id="[[campaignId]]"
@@ -254,8 +254,8 @@ Placetobe Campaign Page
             password="abc123"
           ></placetobe-invest-page>
 
-<!--         </template>
- -->      </placetobe-popup>
+        </template>
+      </placetobe-popup>
 
     <caas-campaign
       api-endpoint="[[apiEndpoint]]"
