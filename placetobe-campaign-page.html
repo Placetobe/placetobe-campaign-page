@@ -220,11 +220,6 @@ Placetobe Campaign Page
         margin: 0 calc(var(--placetobe-margin) / 2)
       }
 
-      #follow-us .icon {
-        height: calc(var(--placetobe-margin) * 1.5);
-        width: calc(var(--placetobe-margin) * 1.5);
-      }
-
       :host .icon {
         @apply(--placetobe-border-box);
         height: calc( var(--placetobe-margin) * 3);
@@ -233,6 +228,12 @@ Placetobe Campaign Page
         margin-right: var(--placetobe-margin);
         cursor: pointer;
       }
+
+      #follow-us .icon {
+        height: calc(var(--placetobe-margin) * 1.5);
+        width: calc(var(--placetobe-margin) * 1.5);
+        padding: 0;
+      }      
     </style>
 
       <placetobe-popup
