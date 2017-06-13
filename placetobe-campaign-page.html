@@ -238,7 +238,7 @@ Placetobe Campaign Page
 
       <placetobe-popup
         id="invest-page-popup"
-        opened="[[!investPageHidden]]"
+        opened="{{!investPageHidden}}"
         on-popup-closed="hideInvestPage"
         modal>
         <template is="dom-if" if="[[!investPageHidden]]">
@@ -532,6 +532,7 @@ Placetobe Campaign Page
 
       showInvestPage: function() {
         this.investPageHidden = false;
+        this.$$('#invest-page-popup').open();
       },
 
       showInvestPageWithSelectedIncentive: function (evt) {
