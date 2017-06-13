@@ -238,8 +238,9 @@ Placetobe Campaign Page
 
       <placetobe-popup
         id="invest-page-popup"
-        opened="[[!investPageHidden]]"
-        on-popup-closed="hideInvestPage">
+        opened$="{{!investPageHidden}}"
+        on-popup-closed="hideInvestPage"
+      >
         <template is="dom-if" if="[[!investPageHidden]]">
 
           <placetobe-invest-page
