@@ -220,20 +220,23 @@ Placetobe Campaign Page
         margin: 0 calc(var(--placetobe-margin) / 2)
       }
 
+      #follow-us #follow-us-footer {
+        @apply --placetobe-flex-layout;
+        @apply --placetobe-flex-layout--horizontal;
+        @apply --placetobe-flex-align--center;
+      }
+      
       :host .icon {
         @apply(--placetobe-border-box);
-        height: calc( var(--placetobe-margin) * 3);
-        width: calc( var(--placetobe-margin) * 2);
-        padding: var(--placetobe-margin) calc( var(--placetobe-margin) / 2);
-        margin-right: var(--placetobe-margin);
+        height: calc(var(--placetobe-margin) * 1.5);        
+        width: calc(var(--placetobe-margin) * 1.5);
+        margin: 0 var(--placetobe-margin);
         cursor: pointer;
       }
 
-      #follow-us .icon {
-        height: calc(var(--placetobe-margin) * 1.5);
-        width: calc(var(--placetobe-margin) * 1.5);
-        padding: 0;
-      }      
+      [hidden] {
+        display: none;
+      }
     </style>
 
       <placetobe-popup
@@ -289,9 +292,9 @@ Placetobe Campaign Page
 
       <placetobe-navigation-bar id="stickyNavigationBar" hidden$="[[stickyNavBarHidden]]" data-sticky>
         <li slot="navigation">[[title]]</li>
-        <placetobe-facebook-icon on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
-        <placetobe-twitter-icon on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
-        <placetobe-linkedin-icon on-tap="shareOnLinkedin" class="icon" slot="footer"></placetobe-linkedin-icon>
+        <placetobe-facebook-icon hidden$="[[!facebookUrl]]" on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
+        <placetobe-twitter-icon hidden$="[[!twitterUrl]]" on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
+        <placetobe-linkedin-icon hidden$="[[!linkedInUrl]]" on-tap="shareOnLinkedin" class="icon" slot="footer"></placetobe-linkedin-icon>
         <placetobe-button
           hidden$="[[!campaignActive]]"
           slot="footer"
@@ -325,9 +328,9 @@ Placetobe Campaign Page
 
     <placetobe-navigation-bar id="navigationBar">
         <li slot="navigation">[[title]]</li>
-        <placetobe-facebook-icon on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
-        <placetobe-twitter-icon on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
-        <placetobe-linkedin-icon on-tap="shareOnLinkedin" class="icon" slot="footer"></placetobe-linkedin-icon>
+        <placetobe-facebook-icon hidden$="[[!facebookUrl]]" on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
+        <placetobe-twitter-icon hidden$="[[!twitterUrl]]" on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
+        <placetobe-linkedin-icon hidden$="[[!linkedInUrl]]" on-tap="shareOnLinkedin" class="icon" slot="footer"></placetobe-linkedin-icon>
         <placetobe-button
           hidden$="[[!campaignActive]]"
           slot="footer"
@@ -401,10 +404,10 @@ Placetobe Campaign Page
           <article slot="main">
             Blijf op de hoogte dit project via social media.
           </article>
-          <div slot="footer">
-            <placetobe-button href="[[facebookUrl]]" target="_blank" link hidden$="[[!facebookUrl]]"><placetobe-facebook-icon class="icon"></placetobe-facebook-icon></placetobe-button>
-            <placetobe-button href="[[twitterUrl]]" target="_blank" link hidden$="[[!twitterUrl]]"><placetobe-twitter-icon class="icon"></placetobe-twitter-icon></placetobe-button>
-            <placetobe-button href="[[linkedInUrl]]" target="_blank" link hidden$="[[!linkedInUrl]]"><placetobe-linkedin-icon class="icon"></placetobe-linkedin-icon></placetobe-button>
+          <div id="follow-us-footer" slot="footer">
+            <placetobe-facebook-icon hidden$="[[!facebookUrl]]" on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
+            <placetobe-twitter-icon hidden$="[[!twitterUrl]]" on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
+            <placetobe-linkedin-icon hidden$="[[!linkedInUrl]]" on-tap="shareOnLinkedin" class="icon" slot="footer"></placetobe-linkedin-icon>
          </div>
         </placetobe-card>
 
@@ -514,6 +517,18 @@ Placetobe Campaign Page
           type: String
         },
 
+        linkedInUrl: {
+          type: String,
+          value: null
+        },
+        twitterUrl: {
+          type: String,
+          value: null
+        },
+        facebookUrl: {
+          type: String,
+          value: null
+        },                
         _groupedIncentives: {
           type: Object
         },
