@@ -412,19 +412,23 @@ Placetobe Campaign Page
 
     </main>
 
-    <template is="dom-if" if="[[showStory]]">
-
     <footer>
       <placetobe-campaign-stats-card
         api-endpoint="[[apiEndpoint]]"
         campaign-id="[[campaignId]]"
-      ></placetobe-campaign-stats-card>
+        campaign-closed="{{campaignClosed}}"        
+      >
+      <placetobe-button
+        hidden$="[[campaignClosed]]"
+        on-tap="showInvestPage"
+        ><span>investeren</span></placetobe-button>       
+      </placetobe-campaign-stats-card>
     </footer>
 
     <google-map
       latitude="[[geoLocation.lat]]"
       longitude="[[geoLocation.lng]]"
-      api-key="AIzaSyAgZCRoae3GgaFraL2V7vUHcvsdoWj3Fus"
+      api-key="AIzaSyCwujn7eyIaFK20HOtD--GFNbPeAlI7WE8"
       disable-default-ui
       disable-zoom
       disable-map-type-control
@@ -439,8 +443,6 @@ Placetobe Campaign Page
       ></google-map-marker>
 
     </google-map>
-
-    </template>
 
   </template>
 
