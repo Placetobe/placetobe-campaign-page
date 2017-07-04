@@ -578,7 +578,8 @@ Placetobe Campaign Page
       },
 
       _setScrollPositions: function(evt) {
-        this._scrollY = window.document.body.scrollTop;
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        this._scrollY = scrollTop;
         this._navigationBarY = this.$.navigationBar.offsetTop;
       },
 
