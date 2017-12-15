@@ -261,6 +261,7 @@ Placetobe Campaign Page
     <caas-campaign
       api-endpoint="[[apiEndpoint]]"
       campaign-id="[[campaignId]]"
+      access-token="[[accessToken]]"
       title="{{title}}"
       introduction-text="{{introductionText}}"
       image-url="{{imageUrl}}"
@@ -470,6 +471,11 @@ Placetobe Campaign Page
         campaignId: {
           type: String,
           value: null,          
+        },
+
+        accessToken: {
+          type: String,
+          value: null
         },
 
         campaignText: {
