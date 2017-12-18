@@ -24,7 +24,7 @@
 `placetobe-campaign-page`
 Placetobe Campaign Page
 
-@demo demo/index.html 
+@demo demo/index.html
 -->
 
 <dom-module id="placetobe-campaign-page">
@@ -44,8 +44,8 @@ Placetobe Campaign Page
       :host header {
         max-width: var(--placetobe-two-column-width);
         margin-left: auto;
-        margin-right: auto;     
-        padding: 0 var(--placetobe-margin);   
+        margin-right: auto;
+        padding: 0 var(--placetobe-margin);
       }
 
       :host header {
@@ -101,7 +101,7 @@ Placetobe Campaign Page
 
       @media(min-width: 601px) {
         :host main {
-          @apply(--placetobe-flex-layout--horizontal); 
+          @apply(--placetobe-flex-layout--horizontal);
         }
       }
 
@@ -143,11 +143,11 @@ Placetobe Campaign Page
       :host main article ::slotted(div h3),
       :host main article h3,
       :host main article ::slotted(* h3) {
-        @apply(--placetobe-font-heading4);        
+        @apply(--placetobe-font-heading4);
       }
 
       :host main article ::slotted(* iframe) {
-        width: 100%;        
+        width: 100%;
       }
 
       :host main article ::slotted(* img),
@@ -233,7 +233,7 @@ Placetobe Campaign Page
         height: calc(var(--placetobe-margin) * 1.5);
         width: calc(var(--placetobe-margin) * 1.5);
         padding: 0;
-      }      
+      }
     </style>
 
       <placetobe-popup
@@ -260,7 +260,7 @@ Placetobe Campaign Page
 
     <caas-campaign
       api-endpoint="[[apiEndpoint]]"
-      campaign-id="[[campaignId]]"
+      campaign-slug="[[campaignId]]"
       access-token="[[accessToken]]"
       title="{{title}}"
       introduction-text="{{introductionText}}"
@@ -313,7 +313,7 @@ Placetobe Campaign Page
       <placetobe-button
         hidden$="[[campaignClosed]]"
         on-tap="showInvestPage"
-        ><span>investeren</span></placetobe-button>                    
+        ><span>investeren</span></placetobe-button>
       </placetobe-campaign-stats-card>
 
       <iron-image
@@ -397,7 +397,7 @@ Placetobe Campaign Page
             </template>
           </placetobe-harmonica>
         </template>
-        
+
         <placetobe-card title="Volg ons" id="follow-us">
           <article slot="main">
             Blijf op de hoogte dit project via social media.
@@ -462,7 +462,7 @@ Placetobe Campaign Page
       },
 
       properties: {
-        
+
         apiEndpoint: {
           type: String,
           value: null,
@@ -470,7 +470,7 @@ Placetobe Campaign Page
 
         campaignId: {
           type: String,
-          value: null,          
+          value: null,
         },
 
         accessToken: {
@@ -523,7 +523,7 @@ Placetobe Campaign Page
         _groupedIncentives: {
           type: Object
         },
-        
+
         _scrollY: {
           type: Number,
           value: 0
@@ -531,8 +531,8 @@ Placetobe Campaign Page
 
         _navigationBarY: {
           type: Number,
-          value: 0          
-        }           
+          value: 0
+        }
 
       },
 
