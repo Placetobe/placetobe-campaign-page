@@ -244,7 +244,7 @@ Placetobe Campaign Page
         <template is="dom-if" if="[[!investPageHidden]]">
           <placetobe-invest-page
             api-endpoint="[[apiEndpoint]]"
-            campaign-slug="[[campaignId]]"
+            campaign-id="[[campaignId]]"
             contract-type-id="2"
             incentive-id="{{selectedIncentiveId}}"
             success-callback-url="[[_getHostUrl(campaignId, apiEndpoint)]]/campagnes/[[campaignId]]/investeren/success"
@@ -260,8 +260,9 @@ Placetobe Campaign Page
 
     <caas-campaign
       api-endpoint="[[apiEndpoint]]"
-      campaign-slug="[[campaignId]]"
+      campaign-slug="[[campaignSlug]]"
       access-token="[[accessToken]]"
+      campaign-id="{{campaignId}}"
       title="{{title}}"
       introduction-text="{{introductionText}}"
       image-url="{{imageUrl}}"
@@ -285,7 +286,7 @@ Placetobe Campaign Page
       api-endpoint="[[apiEndpoint]]"
       campaign-id="[[campaignId]]"
       grouped-incentives="{{_groupedIncentives}}"
-      auto-download
+      auto-download="[[campaignId]]"
     ></caas-campaign-incentives>
 
       <placetobe-navigation-bar id="stickyNavigationBar" hidden$="[[stickyNavBarHidden]]" data-sticky>
@@ -308,6 +309,7 @@ Placetobe Campaign Page
       <placetobe-campaign-stats-card
         api-endpoint="[[apiEndpoint]]"
         campaign-id="[[campaignId]]"
+        auto-download="[[campaignId]]"
         campaign-closed="{{campaignClosed}}"
       >
       <placetobe-button
@@ -468,7 +470,7 @@ Placetobe Campaign Page
           value: null,
         },
 
-        campaignId: {
+        campaignSlug: {
           type: String,
           value: null,
         },
