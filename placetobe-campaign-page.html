@@ -170,7 +170,8 @@ Placetobe Campaign Page
       }
 
       :host placetobe-navigation-bar[data-sticky] {
-        position: fixed;
+        position: sticky;
+        position: -webkit-sticky;
         top:0;
         left: 0;
         right: 0;
@@ -326,7 +327,7 @@ Placetobe Campaign Page
         src="[[imageUrl]]"
       ></iron-image>
 
-    <placetobe-navigation-bar id="navigationBar">
+    <placetobe-navigation-bar id="navigationBar" data-sticky>
         <li slot="navigation">[[title]]</li>
         <placetobe-facebook-icon on-tap="shareOnFacebook" class="icon" slot="footer"></placetobe-facebook-icon>
         <placetobe-twitter-icon on-tap="shareOnTwitter" class="icon" slot="footer"></placetobe-twitter-icon>
