@@ -246,7 +246,7 @@ Placetobe Campaign Page
           <placetobe-invest-page
             api-endpoint="[[apiEndpoint]]"
             campaign-id="[[campaignId]]"
-            contract-type-id="7"
+            contract-type-id="[[activeContractTypeId]]"
             incentive-id="{{selectedIncentiveId}}"
             success-callback-url="[[_getHostUrl(campaignId, apiEndpoint)]]/campagnes/[[campaignId]]/investeren/success"
             cancel-callback-url="[[_getHostUrl(campaignId, apiEndpoint)]]/campagnes/[[campaignId]]/investeren/cancel"
@@ -535,8 +535,16 @@ Placetobe Campaign Page
         _navigationBarY: {
           type: Number,
           value: 0
+        },
+        activeContractTypeId: {
+          type: Number,
+          value: null,
+          computed: 'computeActiveContractTypeId(contractTypes);'
         }
+      },
 
+      computeActiveContractTypeId(contractTypes) {
+        if (contractTypes[0]) return contractTypes[0].id;
       },
 
       showInvestPage: function() {
